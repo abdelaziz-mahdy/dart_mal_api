@@ -6,4 +6,4 @@ before_script:
 test:
   stage: test
   script:
-    - dart run test
+    - dart run test --chain-stack-traces
