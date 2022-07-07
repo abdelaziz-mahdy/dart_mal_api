@@ -5,14 +5,14 @@ A Dart wrapper for the official MyAnimeList REST API.
 ## Tests and Examples
 
 To run the example in the `example` directory, ensure that the following enviroment variables are set:
-- `CLIENT_ID` - obtained after registering your application at [MAL's API CONFIG](https://myanimelist.net/apiconfig)
-- `CLIENT_SECRET` - obtained after registering your application at [MAL's API CONFIG](https://myanimelist.net/apiconfig)
-- `REDIRECT_URL` - the URL to redirect to after oauth2 authentication (must be specified in the `App Redirect URL` field at [MAL's API CONFIG](https://myanimelist.net/apiconfig))
+- `CLIENT_ID` - obtained after registering your application at [MAL's API Config](https://myanimelist.net/apiconfig)
+- `CLIENT_SECRET` - obtained after registering your application at [MAL's API Config](https://myanimelist.net/apiconfig)
+- `REDIRECT_URL` - the URL to redirect to after oauth2 authentication (must be specified in the `App Redirect URL` field at [MAL's API Config](https://myanimelist.net/apiconfig))
 
 To run the tests in the `test` directory, ensure that the following environment variables are set:
 - `CREDENTIALS` - JSON string containing your oauth2 credentials (generated and stored in the `creds.json` file when `example/mal_api_example.dart` is runned)
-- `CLIENT_ID` - obtained after registering your application at [MAL's API CONFIG](https://myanimelist.net/apiconfig)
-- `CLIENT_SECRET` - obtained after registering your application at [MAL's API CONFIG](https://myanimelist.net/apiconfig)
+- `CLIENT_ID` - obtained after registering your application at [MAL's API Config](https://myanimelist.net/apiconfig)
+- `CLIENT_SECRET` - obtained after registering your application at [MAL's API Config](https://myanimelist.net/apiconfig)
 
 ## Getting Started
 
