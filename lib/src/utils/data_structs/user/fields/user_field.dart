@@ -1,7 +1,7 @@
 import 'package:mal_api/mal_api.dart';
 
 class UserField extends Field {
-  UserField.animeStatistics([List<AnimeStatisticsField>? fields])
+  UserField.animeStatistics([List<UserAnimeStatisticsField>? fields])
     : super('anime_statistics', fields);
   UserField.birthday() : super('birthday');
   UserField.id() : super('id');

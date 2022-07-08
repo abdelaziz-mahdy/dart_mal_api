@@ -3,7 +3,7 @@ import 'package:mal_api/src/utils/exts/map_exts.dart';
 import 'package:mal_api/src/utils/exts/nullable_exts.dart';
 
 class User {
-  final AnimeStatistics? animeStatistics;
+  final UserAnimeStatistics? animeStatistics;
   final DateTime? birthday;
   final int? id;
   final String? gender;
@@ -18,7 +18,7 @@ class User {
     : animeStatistics
         = data
           .getAs<Map<String, dynamic>>('anime_statistics')
-          .map(AnimeStatistics.fromJsonMap),
+          .map(UserAnimeStatistics.fromJsonMap),
       birthday = data.getAs<String>('birthday').map(DateTime.parse),
       id = data.getAs<int>('id'),
       gender = data.getAs<String>('gender'),

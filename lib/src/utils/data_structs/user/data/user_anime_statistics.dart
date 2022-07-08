@@ -1,7 +1,7 @@
 import 'package:mal_api/src/utils/exts/map_exts.dart';
 import 'package:mal_api/src/utils/exts/nullable_exts.dart';
 
-class AnimeStatistics {
+class UserAnimeStatistics {
   final int? meanScore;
   final double? numDays;
   final double? numDaysCompleted;
@@ -18,7 +18,7 @@ class AnimeStatistics {
   final int? numItemsWatching;
   final int? numTimesRewatched;
 
-  AnimeStatistics.fromJsonMap(Map<String, dynamic> data)
+  UserAnimeStatistics.fromJsonMap(Map<String, dynamic> data)
     : meanScore = data.getAs<int>('mean_score'),
       numDays
         = data.getAs<num>('num_days').map((i) => double.parse(i.toString())),
