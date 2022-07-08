@@ -1,6 +1,6 @@
 name: mal_api
 description: A Dart wrapper for MyAnimeList REST API.
-version: 1.0.0
+version: 1.0.1
 homepage: https://gitlab.com/hingen/dart_mal_api
 
 environment:
