@@ -14,6 +14,11 @@ import 'package:mal_api/src/utils/factories/user_media_list_status_factories/use
 
 /// Handles MyAnimeList API requests.
 ///
+/// Common behaviour:
+///
+/// At any point in time, if an error occurs while a request is being made to
+/// the MyAnimeList API, a [ClientException] will be thrown.
+///
 /// Common parameters:
 ///
 /// [fields] - Specify which fields the MyAnimeList API should return. By
@@ -167,7 +172,7 @@ class Client {
       'sort': sort.toParamStr()
     };
 
-    return (await _getIterable<Map<String, dynamic>>(
+    return (await _getPageable<Map<String, dynamic>>(
       '/anime/season/$year/${season.toParamStr()}', params
     )).map((data) => Anime.fromJsonMap(data['node'])).toList();
   }
@@ -186,7 +191,7 @@ class Client {
       'offset': offset.toString()
     };
 
-    return (await _getIterable<Map<String, dynamic>>(
+    return (await _getPageable<Map<String, dynamic>>(
       '/anime/suggestions', params
     )).map((data) => Anime.fromJsonMap(data['node'])).toList();
   }
@@ -272,6 +277,98 @@ class Client {
       );
   }
 
+  /// Get a list of [ForumBoard]s grouped by their [ForumCategory].
+  Future<List<ForumCategory>> getForumBoards() async {
+    Map<String, dynamic> decoded
+      = await _getDecoded<Map<String, dynamic>>('/forum/boards', {});
+    List<dynamic> categories = decoded['categories'];
+
+    return categories
+      .cast<Map<String, dynamic>>()
+      .map(ForumCategory.fromJsonMap)
+      .toList();
+  }
+
+  /// Get the [ForumTopic] associated with [topicId].
+  ///
+  /// [limit] and [offset] are use to control the paging of the
+  /// [ForumTopic.posts] field. The other fields are unaffected and will remain
+  /// the same.
+  Future<ForumTopic> getForumTopicDetail(
+    int topicId, {int limit = 100, int offset = 0}
+  ) async {
+    final params = {'limit': limit.toString(), 'offset': offset.toString()};
+
+    return ForumTopic
+      .fromJsonMap(
+        (await _getDecoded<Map<String, dynamic>>(
+          '/forum/topic/$topicId', params
+        ))['data']
+      );
+  }
+
+  /// Get a list of [ForumTopicInfo] that match the provided parameters.
+  ///
+  /// [boardId] and [subboardId] specifies the ID of the board and subboard
+  /// respectively, that the topic must belong to. If [subboardId] is specified,
+  /// [boardId] will be ignored.
+  ///
+  /// [q] specifies the keyword(s) that the title of the topic must contain.
+  ///
+  /// If [topicUserName] is specified, the topic must be created by the user
+  /// with said user name.
+  ///
+  /// If [userName] is specified, the topic must contain a post made by the user
+  /// with said user name.
+  ///
+  /// If [boardId], [subboardId], [q], [topicUserName], and [userName] are all
+  /// not specified, an [ArgumentError] will be thrown.
+  ///
+  /// Note that the [ForumPoster.forumAvator] field of
+  /// [ForumTopicInfo.createdBy] and [ForumTopicInfo.lastPostCreatedBy] will
+  /// both be null.
+  Future<List<ForumTopicInfo>> getForumTopics({
+    int? boardId,
+    int limit = 100,
+    int offset = 0,
+    String? q,
+    int? subboardId,
+    String? topicUserName,
+    String? userName
+  }) async {
+    final params = {
+      'limit': limit.toString(),
+      'offset': offset.toString(),
+      'sort': 'recent' // Currently, 'recent' is the only option
+    };
+
+    if (subboardId != null) {
+      params['subboard_id'] = subboardId.toString();
+    } else if (boardId != null) {
+      params['board_id'] = boardId.toString();
+    }
+
+    if (q != null) {
+      params['q'] = q;
+    }
+    if (topicUserName != null) {
+      params['topic_user_name'] = topicUserName.toString();
+    }
+    if (userName != null) {
+      params['user_name'] = userName.toString();
+    }
+
+    if (params.length == 3) {
+      throw ArgumentError(
+        'At least one of the following parameters must be specified: boardId, q, subboardId, topicUserName, userName'
+      );
+    }
+
+    return (await _getPageable<Map<String, dynamic>>('/forum/topics', params))
+      .map(ForumTopicInfo.fromJsonMap)
+      .toList();
+  }
+
   Future<List<Media>> _getMediaList(
     String q,
     String path,
@@ -289,7 +386,7 @@ class Client {
       'offset': offset.toString()
     };
 
-    return (await _getIterable<Map<String, dynamic>>(path, params))
+    return (await _getPageable<Map<String, dynamic>>(path, params))
       .map((data) => mediaFactory.fromJsonMap(data['node']))
       .toList();
   }
@@ -328,7 +425,7 @@ class Client {
       'offset': offset.toString()
     };
 
-    return (await _getIterable<Map<String, dynamic>>('$path/ranking', params))
+    return (await _getPageable<Map<String, dynamic>>('$path/ranking', params))
       .map(rankedMediaFactory.fromJsonMap)
       .toList();
   }
@@ -372,12 +469,12 @@ class Client {
       params['sort'] = sort;
     }
 
-    return (await _getIterable<Map<String, dynamic>>(
+    return (await _getPageable<Map<String, dynamic>>(
       '/users/$username${path}list', params
     )).map((data) => mediaFactory.fromJsonMap(data['node'])).toList();
   }
 
-  Future<Iterable<T>> _getIterable<T>(
+  Future<Iterable<T>> _getPageable<T>(
     String path, Map<String, String> params
   ) async {
     final decoded = await _getDecoded<Map<String, dynamic>>(path, params);

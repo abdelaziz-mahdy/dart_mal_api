@@ -14,6 +14,8 @@ To run the tests in the `test` directory, ensure that the following environment 
 - `CLIENT_ID` - obtained after registering your application at [MAL's API Config](https://myanimelist.net/apiconfig)
 - `CLIENT_SECRET` - obtained after registering your application at [MAL's API Config](https://myanimelist.net/apiconfig)
 
+Before running the tests, do note that some test will make modifications to your anime and manga list.
+
 ## Getting Started
 
 To start making request to the MyAnimeList API, you will need a `Client` object. A `Client` object can be obtained by calling `Authenticator::authenticate()`. Refer to the example for more information.
@@ -25,10 +27,6 @@ Most `Client` methods have a `fields` parameter. Certain `Fields` can also have 
 ## Example
 
 See `example/mal_api_example.dart`.
-
-## Future Features
-
- - Forum
 
 ## License
 Distributed under the MIT License. See `LICENSE` for more information.

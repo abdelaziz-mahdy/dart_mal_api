@@ -4,6 +4,7 @@ import 'package:mal_api/mal_api.dart';
 
 const _sampleAnimeId = 34798;
 const _sampleMangaId = 14065;
+const _sampleForumTopicId = 1715612;
 
 late final Client _client;
 
@@ -565,6 +566,74 @@ void main() {
     'Get my user information',
     () async {
       await _client.getUserInformation();
+    }
+  );
+
+  test(
+    'Get forum boards.',
+    () async {
+      final categories = await _client.getForumBoards();
+      expect(
+        categories.every(
+          (category) => category.title != null
+            && category.boards != null
+            && category.boards!.every(
+              (board) => board.description != null
+                && board.id != null
+                && board.title != null
+                && board.subboards != null
+                && board.subboards!.every(
+                  (subboard) => subboard.id != null && subboard.title != null
+                )
+            )
+        ),
+        true
+      );
+    }
+  );
+
+  test(
+    'Get forum topic details.',
+    () async {
+      final topic
+        = await _client.getForumTopicDetail(_sampleForumTopicId, limit: 5);
+
+      expect(topic.poll?.closed != null, true);
+      expect(topic.poll?.id != null, true);
+      expect(topic.poll?.options != null, true);
+      expect(
+        topic.poll?.options!.every(
+          (option) => option.id != null
+            && option.text != null
+            && option.votes != null
+        ),
+        true
+      );
+      expect(topic.poll?.question != null, true);
+    }
+  );
+
+  test(
+    'Get forum topics',
+    () async {
+      final forumTopics
+        = await _client.getForumTopics(limit: 5, q: 'Yuru Camp', subboardId: 1);
+
+      expect(
+        forumTopics.every(
+          (topic) => topic.createdAt != null
+            && topic.createdBy?.id != null
+            && topic.createdBy?.name != null
+            && topic.id != null
+            && topic.isLocked != null
+            && topic.lastPostCreatedAt != null
+            && topic.lastPostCreatedBy?.id != null
+            && topic.lastPostCreatedBy?.name != null
+            && topic.numberOfPosts != null
+            && topic.title != null
+        ),
+        true
+      );
     }
   );
 }
