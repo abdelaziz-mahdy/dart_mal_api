@@ -49,14 +49,14 @@ class Authenticator {
       required Future<void> Function(Uri) redirect,
       required Uri redirectUrl,
       required String secret,
-      Future<bool> Function()? onTokenRefreshWarning})
+      Future<bool> Function()? onTokenRefreshNeeded})
       : _credentialsFile = credentialsFile,
         _id = id,
         _secret = secret,
         _redirectUrl = redirectUrl,
         _redirect = redirect,
         _listen = listen,
-        _onTokenRefreshWarning = onTokenRefreshWarning;
+        _onTokenRefreshNeeded = onTokenRefreshNeeded;
 
   /// Authenticate the user
   Future<Client?> authenticate() async {
