@@ -39,9 +39,10 @@ class Authenticator {
   /// [credentialsFile].
   ///
   /// [onTokenRefreshNeeded] is an optional callback that gets invoked when
-  /// the authentication token needs to be refreshed. This callback should return
-  /// `true` to proceed with the refresh, or `false` to skip it. This allows you
-  /// to show warnings or confirmation dialogs to the user before refreshing.
+  /// the refresh token has expired and a new authentication is needed. This
+  /// callback should return `true` to proceed with re-authentication, or `false`
+  /// to skip it. Normal token refresh using the refresh token requires no
+  /// user confirmation and happens automatically.
   Authenticator(
       {required File credentialsFile,
       required String id,
@@ -72,7 +73,6 @@ class Authenticator {
     try {
       credentialsStr = await _credentialsFile.readAsString();
     } on FileSystemException {
-      print('Failed to read credentials file.');
       return null;
     }
 
@@ -80,7 +80,6 @@ class Authenticator {
     try {
       credentials = oauth2.Credentials.fromJson(credentialsStr);
     } on FormatException {
-      print('Invalid credentials.');
       return null;
     }
 
@@ -92,13 +91,10 @@ class Authenticator {
 
     // Attempt to refresh the token if it's expired
     try {
-      await refreshTokenIfExpired(client);
+      return await refreshTokenIfExpired(client);
     } catch (e) {
-      print('Failed to refresh credentials: $e');
       return null;
     }
-
-    return Client(client);
   }
 
   Future<Client?> _authenticateNew() async {
@@ -149,7 +145,7 @@ class Authenticator {
     try {
       await _credentialsFile.writeAsString(client.credentials.toJson());
     } on FileSystemException {
-      print('Failed to write credentials to file.');
+      // Silently fail to avoid disrupting client operations
     }
   }
 
@@ -158,9 +154,8 @@ class Authenticator {
   Future<void> _onCredentialsRefreshed(oauth2.Credentials credentials) async {
     try {
       await _credentialsFile.writeAsString(credentials.toJson());
-      print('Credentials refreshed and updated in file.');
     } on FileSystemException {
-      print('Failed to update credentials file after refresh.');
+      // Silently fail to avoid disrupting client operations
     }
   }
 
@@ -173,21 +168,36 @@ class Authenticator {
 
   /// Refreshes the given [client]'s credentials if they are expired.
   ///
-  /// If the credentials are expired, this method:
-  /// 1. Invokes the [onTokenRefreshNeeded] callback if provided
-  /// 2. Only proceeds with refresh if the callback returns `true` (or if no callback is set)
-  /// 3. Updates the stored credentials file with the new tokens
+  /// Attempts to automatically refresh the access token using the refresh token.
+  /// This requires no user confirmation.
   ///
-  /// This allows you to show user warnings or confirmations before refreshing tokens.
-  /// If the callback returns `false`, the refresh is skipped.
+  /// If the refresh token has also expired and refresh fails, the
+  /// [onTokenRefreshNeeded] callback is invoked to ask the user if they want
+  /// to re-authenticate. If the callback returns `true`, the user is redirected
+  /// to re-authenticate; if `false`, the operation is skipped.
   ///
-  /// Throws an exception if the refresh fails (e.g., network error, invalid credentials).
-  Future<void> refreshTokenIfExpired(oauth2.Client client) async {
-    if (isCredentialsExpired(client.credentials)) {
-      final shouldRefresh = await _onTokenRefreshNeeded?.call() ?? true;
-      if (shouldRefresh) {
-        await client.refreshCredentials();
+  /// Returns the authenticated client after refresh, or null if re-authentication
+  /// was needed but the user declined.
+  ///
+  /// Throws an exception if the refresh fails and user confirmation is declined.
+  Future<Client?> refreshTokenIfExpired(oauth2.Client client) async {
+    if (!isCredentialsExpired(client.credentials)) {
+      return Client(client);
+    }
+
+    // Try to refresh with the existing refresh token
+    try {
+      await client.refreshCredentials();
+      return Client(client);
+    } catch (e) {
+      // Ask user if they want to re-authenticate
+      final shouldReauthenticate = await _onTokenRefreshNeeded?.call() ?? false;
+      if (!shouldReauthenticate) {
+        return null;
       }
+
+      // Redirect user to re-authenticate
+      return await _authenticateNew();
     }
   }
 }
