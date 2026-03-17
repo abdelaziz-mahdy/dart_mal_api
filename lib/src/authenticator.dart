@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:mal_api/mal_api.dart';
 
@@ -22,6 +23,7 @@ class Authenticator {
   final Future<void> Function(Uri) _redirect;
   final Future<Uri> Function(Uri) _listen;
   final Future<bool> Function()? _onTokenRefreshNeeded;
+  final http.Client Function(http.Client)? _httpClientWrapper;
 
   /// Authenticates the application associated with [id] and [secret].
   ///
@@ -50,14 +52,16 @@ class Authenticator {
       required Future<void> Function(Uri) redirect,
       required Uri redirectUrl,
       required String secret,
-      Future<bool> Function()? onTokenRefreshNeeded})
+      Future<bool> Function()? onTokenRefreshNeeded,
+      http.Client Function(http.Client)? httpClientWrapper})
       : _credentialsFile = credentialsFile,
         _id = id,
         _secret = secret,
         _redirectUrl = redirectUrl,
         _redirect = redirect,
         _listen = listen,
-        _onTokenRefreshNeeded = onTokenRefreshNeeded;
+        _onTokenRefreshNeeded = onTokenRefreshNeeded,
+        _httpClientWrapper = httpClientWrapper;
 
   /// Authenticate the user
   Future<Client?> authenticate() async {
@@ -135,7 +139,10 @@ class Authenticator {
     if (params.containsKey('code')) {
       final authClient = await grant.handleAuthorizationResponse(params);
       await _updateCredentialsFile(authClient);
-      return Client(authClient);
+      final wrappedClient = _httpClientWrapper != null
+          ? _httpClientWrapper!(authClient)
+          : authClient;
+      return Client(wrappedClient);
     } else {
       return null;
     }
@@ -181,14 +188,17 @@ class Authenticator {
   ///
   /// Throws an exception if the refresh fails and user confirmation is declined.
   Future<Client?> refreshTokenIfExpired(oauth2.Client client) async {
+    http.Client wrap(http.Client c) =>
+        _httpClientWrapper != null ? _httpClientWrapper!(c) : c;
+
     if (!isCredentialsExpired(client.credentials)) {
-      return Client(client);
+      return Client(wrap(client));
     }
 
     // Try to refresh with the existing refresh token
     try {
       await client.refreshCredentials();
-      return Client(client);
+      return Client(wrap(client));
     } catch (e) {
       // Ask user if they want to re-authenticate
       final shouldReauthenticate = await _onTokenRefreshNeeded?.call() ?? false;
