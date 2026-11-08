@@ -1,10 +1,10 @@
-import 'package:mal_api/mal_api.dart';
-import 'package:mal_api/src/utils/factories/user_media_list_status_factories/user_media_list_status_factory.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
+import 'package:mal_api_plus/src/utils/factories/user_media_list_status_factories/user_media_list_status_factory.dart';
 
 class UserMangaListStatusFactory extends UserMediaListStatusFactory {
   const UserMangaListStatusFactory();
 
   @override
-  UserMangaListStatus fromJsonMap(Map<String, dynamic> data)
-    => UserMangaListStatus.fromJsonMap(data);
+  UserMangaListStatus fromJsonMap(Map<String, dynamic> data) =>
+      UserMangaListStatus.fromJsonMap(data);
 }

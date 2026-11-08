@@ -1,12 +1,4 @@
-enum AnimeMediaType {
-  movie,
-  music,
-  ova,
-  ona,
-  special,
-  tv,
-  unknown
-}
+enum AnimeMediaType { movie, music, ova, ona, special, tv, unknown }
 
 class AnimeMediaTypeUtils {
   static AnimeMediaType? tryParse(String str) {

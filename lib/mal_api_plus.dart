@@ -1,4 +1,4 @@
-library mal_api;
+library;
 
 export 'src/authenticator.dart';
 export 'src/client.dart';

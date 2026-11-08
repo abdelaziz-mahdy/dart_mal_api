@@ -1,7 +1,4 @@
-enum SeasonalAnimeSortingMethod {
-  animeScore,
-  animeNumListUsers
-}
+enum SeasonalAnimeSortingMethod { animeScore, animeNumListUsers }
 
 extension SeasonalAnimeSortingMethodExts on SeasonalAnimeSortingMethod {
   String toParamStr() {

@@ -9,7 +9,7 @@ enum Rating {
 
 class RatingUtils {
   static Rating? tryParse(String str) {
-    switch(str) {
+    switch (str) {
       case 'g':
         return Rating.g;
       case 'pg':

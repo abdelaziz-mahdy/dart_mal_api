@@ -1,4 +1,4 @@
-import 'package:mal_api/mal_api.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
 
 class UserAnimeStatisticsField extends Field {
   UserAnimeStatisticsField.meanScore() : super('mean_score');
@@ -14,7 +14,7 @@ class UserAnimeStatisticsField extends Field {
   UserAnimeStatisticsField.numItemsDropped() : super('num_items_dropped');
   UserAnimeStatisticsField.numItemsOnHold() : super('num_items_on_hold');
   UserAnimeStatisticsField.numItemsPlanToWatch()
-    : super('num_items_plan_to_watch');
+      : super('num_items_plan_to_watch');
   UserAnimeStatisticsField.numItemsWatching() : super('num_items_watching');
   UserAnimeStatisticsField.numTimesRewatched() : super('num_times_rewatched');
 }

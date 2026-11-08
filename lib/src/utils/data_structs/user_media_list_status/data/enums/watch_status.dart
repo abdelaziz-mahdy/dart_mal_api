@@ -1,10 +1,4 @@
-enum WatchStatus {
-  completed,
-  dropped,
-  onHold,
-  planToWatch,
-  watching
-}
+enum WatchStatus { completed, dropped, onHold, planToWatch, watching }
 
 class WatchStatusUtils {
   static WatchStatus? tryParse(String str) {

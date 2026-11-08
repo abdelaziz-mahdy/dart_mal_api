@@ -11,8 +11,7 @@ class Field {
     return s;
   }
 
-  Field(this._name, [List<Field>? fields])
-    : _fields = fields ?? [];
+  Field(this._name, [List<Field>? fields]) : _fields = fields ?? [];
 }
 
 extension FieldListExt on List<Field> {

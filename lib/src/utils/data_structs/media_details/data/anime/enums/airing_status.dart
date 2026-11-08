@@ -1,8 +1,4 @@
-enum AiringStatus {
-  currentlyAiring,
-  finishedAiring,
-  notYetAired
-}
+enum AiringStatus { currentlyAiring, finishedAiring, notYetAired }
 
 class AiringStatusUtils {
   static AiringStatus? tryParse(String str) {

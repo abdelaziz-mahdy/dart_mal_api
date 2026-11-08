@@ -1,8 +1,4 @@
-enum PublishingStatus {
-  currentlyPublishing,
-  finished,
-  notYetPublished
-}
+enum PublishingStatus { currentlyPublishing, finished, notYetPublished }
 
 class PublishingStatusUtils {
   static PublishingStatus? tryParse(String str) {

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
-import 'package:mal_api/mal_api.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
 
 /// Handles oauth2 authentication for the application.
 class Authenticator {

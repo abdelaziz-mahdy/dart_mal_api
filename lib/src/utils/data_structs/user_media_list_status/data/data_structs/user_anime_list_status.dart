@@ -1,6 +1,6 @@
-import 'package:mal_api/mal_api.dart';
-import 'package:mal_api/src/utils/exts/map_exts.dart';
-import 'package:mal_api/src/utils/exts/nullable_exts.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
+import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
 class UserAnimeListStatus extends UserMediaListStatus {
   final bool? isRewatching;
@@ -23,22 +23,22 @@ class UserAnimeListStatus extends UserMediaListStatus {
     List<String>? tags,
     DateTime? updatedAt,
   }) : super(
-    comments: comments,
-    finishDate: finishDate,
-    priority: priority,
-    score: score,
-    startDate: startDate,
-    tags: tags,
-    updatedAt: updatedAt
-  );
+            comments: comments,
+            finishDate: finishDate,
+            priority: priority,
+            score: score,
+            startDate: startDate,
+            tags: tags,
+            updatedAt: updatedAt);
 
   UserAnimeListStatus.fromJsonMap(Map<String, dynamic> data)
-    : isRewatching = data.getAs<bool>('is_rewatching'),
-    numEpisodesWatched = data.getAs<int>('num_episodes_watched'),
-    numTimesRewatched = data.getAs<int>('num_times_rewatched'),
-    rewatchValue = data.getAs<int>('rewatch_value'),
-    status = data.getAs<String>('status').flatMap(WatchStatusUtils.tryParse),
-    super.fromJsonMap(data);
+      : isRewatching = data.getAs<bool>('is_rewatching'),
+        numEpisodesWatched = data.getAs<int>('num_episodes_watched'),
+        numTimesRewatched = data.getAs<int>('num_times_rewatched'),
+        rewatchValue = data.getAs<int>('rewatch_value'),
+        status =
+            data.getAs<String>('status').flatMap(WatchStatusUtils.tryParse),
+        super.fromJsonMap(data);
 
   @override
   Map<String, String> toStrMap() {
@@ -46,10 +46,10 @@ class UserAnimeListStatus extends UserMediaListStatus {
     map['is_rewatching'] = isRewatching == null ? '' : isRewatching.toString();
     // num_watched_episodes is not a typo of num_episodes_watched. This is base
     // on the specifications of the MAL API
-    map['num_watched_episodes']
-      = numEpisodesWatched == null ? '' : numEpisodesWatched.toString();
-    map['num_times_rewatched']
-      = numTimesRewatched == null ? '' : numTimesRewatched.toString();
+    map['num_watched_episodes'] =
+        numEpisodesWatched == null ? '' : numEpisodesWatched.toString();
+    map['num_times_rewatched'] =
+        numTimesRewatched == null ? '' : numTimesRewatched.toString();
     map['rewatch_value'] = rewatchValue == null ? '' : rewatchValue.toString();
     map['status'] = status == null ? '' : status!.toParamStr();
     return map;
