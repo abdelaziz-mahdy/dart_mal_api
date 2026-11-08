@@ -1,7 +1,7 @@
-import 'package:mal_api/mal_api.dart';
-import 'package:mal_api/src/utils/exts/map_exts.dart';
-import 'package:mal_api/src/utils/exts/nullable_exts.dart';
-import 'package:mal_api/src/utils/factories/media_factories/media_factory.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
+import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
+import 'package:mal_api_plus/src/utils/factories/media_factories/media_factory.dart';
 
 abstract class RelatedMedia {
   final Media? mediaNode;

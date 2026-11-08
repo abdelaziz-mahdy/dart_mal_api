@@ -1,5 +1,5 @@
-import 'package:mal_api/src/utils/exts/map_exts.dart';
-import 'package:mal_api/src/utils/exts/nullable_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
 class ForumPoster{
   final int? id;

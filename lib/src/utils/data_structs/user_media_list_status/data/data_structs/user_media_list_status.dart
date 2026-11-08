@@ -1,6 +1,6 @@
-import 'package:mal_api/src/utils/exts/date_time_exts.dart';
-import 'package:mal_api/src/utils/exts/map_exts.dart';
-import 'package:mal_api/src/utils/exts/nullable_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/date_time_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
 abstract class UserMediaListStatus {
   final String? comments;

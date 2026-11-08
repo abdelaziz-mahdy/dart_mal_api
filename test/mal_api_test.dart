@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:test/test.dart';
-import 'package:mal_api/mal_api.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
 
 const _sampleAnimeId = 34798;
 const _sampleMangaId = 14065;

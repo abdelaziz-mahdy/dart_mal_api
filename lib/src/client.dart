@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
-import 'package:mal_api/mal_api.dart';
-import 'package:mal_api/src/utils/factories/media_factories/anime_factory.dart';
-import 'package:mal_api/src/utils/factories/media_factories/manga_factory.dart';
-import 'package:mal_api/src/utils/factories/media_factories/media_factory.dart';
-import 'package:mal_api/src/utils/factories/ranked_media_factories/ranked_anime_factory.dart';
-import 'package:mal_api/src/utils/factories/ranked_media_factories/ranked_manga_factory.dart';
-import 'package:mal_api/src/utils/factories/ranked_media_factories/ranked_media_factory.dart';
-import 'package:mal_api/src/utils/factories/user_media_list_status_factories/user_anime_list_status_factory.dart';
-import 'package:mal_api/src/utils/factories/user_media_list_status_factories/user_manga_list_status_factory.dart';
-import 'package:mal_api/src/utils/factories/user_media_list_status_factories/user_media_list_status_factory.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
+import 'package:mal_api_plus/src/utils/factories/media_factories/anime_factory.dart';
+import 'package:mal_api_plus/src/utils/factories/media_factories/manga_factory.dart';
+import 'package:mal_api_plus/src/utils/factories/media_factories/media_factory.dart';
+import 'package:mal_api_plus/src/utils/factories/ranked_media_factories/ranked_anime_factory.dart';
+import 'package:mal_api_plus/src/utils/factories/ranked_media_factories/ranked_manga_factory.dart';
+import 'package:mal_api_plus/src/utils/factories/ranked_media_factories/ranked_media_factory.dart';
+import 'package:mal_api_plus/src/utils/factories/user_media_list_status_factories/user_anime_list_status_factory.dart';
+import 'package:mal_api_plus/src/utils/factories/user_media_list_status_factories/user_manga_list_status_factory.dart';
+import 'package:mal_api_plus/src/utils/factories/user_media_list_status_factories/user_media_list_status_factory.dart';
 
 /// Handles MyAnimeList API requests.
 ///

@@ -1,4 +1,4 @@
-import 'package:mal_api/mal_api.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
 
 class SerializationNodeField extends Field {
   SerializationNodeField.id() : super('id');

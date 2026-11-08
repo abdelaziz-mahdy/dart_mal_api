@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:mal_api/mal_api.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
 
 // Ensure that these environment variables have been set before running
 final _id = Platform.environment['CLIENT_ID']!;

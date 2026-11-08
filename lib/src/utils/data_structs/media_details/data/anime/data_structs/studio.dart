@@ -1,4 +1,4 @@
-import 'package:mal_api/src/utils/exts/map_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
 
 class Studio {
   final int? id;

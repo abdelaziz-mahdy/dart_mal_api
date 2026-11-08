@@ -1,6 +1,6 @@
-import 'package:mal_api/mal_api.dart';
-import 'package:mal_api/src/utils/exts/map_exts.dart';
-import 'package:mal_api/src/utils/exts/nullable_exts.dart';
+import 'package:mal_api_plus/mal_api_plus.dart';
+import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
+import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
 class Anime extends Media {
   final int? averageEpisodeDuration; // In seconds
