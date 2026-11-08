@@ -1,6 +1,26 @@
-enum ReadStatus { completed, dropped, onHold, planToRead, reading }
+/// Where a manga is in the user's list.
+enum ReadStatus {
+  /// Read to the end.
+  completed,
 
+  /// Stopped reading.
+  dropped,
+
+  /// Paused, to continue later.
+  onHold,
+
+  /// Not started yet.
+  planToRead,
+
+  /// Currently reading.
+  reading,
+}
+
+/// Parsing helpers for [ReadStatus].
 class ReadStatusUtils {
+  /// Parses the API value, such as `plan_to_read`.
+  ///
+  /// Returns `null` for unknown values.
   static ReadStatus? tryParse(String str) {
     switch (str) {
       case 'completed':
@@ -19,7 +39,9 @@ class ReadStatusUtils {
   }
 }
 
+/// Conversions for [ReadStatus].
 extension ReadStatusExts on ReadStatus {
+  /// The value the API uses for this status, such as `plan_to_read`.
   String toParamStr() {
     switch (this) {
       case ReadStatus.completed:

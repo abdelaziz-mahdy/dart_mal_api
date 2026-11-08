@@ -2,16 +2,33 @@ import 'package:mal_api_plus/mal_api_plus.dart';
 import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
 import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
+/// A manga entry from MyAnimeList.
 class Manga extends Media {
+  /// Authors and their roles, such as story or art.
   final List<Author>? authors;
+
+  /// Format, such as manga, novel or one-shot.
   final MangaMediaType? mediaType;
+
+  /// The signed-in user's list entry for this manga, if any.
   final UserMangaListStatus? myListStatus;
+
+  /// Total number of chapters, or 0 when unknown.
   final int? numChapters;
+
+  /// Total number of volumes, or 0 when unknown.
   final int? numVolumes;
+
+  /// Manga that users recommend to fans of this one.
   final List<MangaRecommendation>? recommendations;
+
+  /// Magazines the manga was serialized in.
   final List<Serialization>? serialization;
+
+  /// Whether the manga is finished, publishing, or not yet published.
   final PublishingStatus? status;
 
+  /// Creates a manga from already known values.
   Manga(
       {super.alternativeTitles,
       this.authors,
@@ -43,6 +60,7 @@ class Manga extends Media {
       super.title,
       super.updatedAt});
 
+  /// Creates a manga from a MyAnimeList API JSON object.
   Manga.fromJsonMap(super.data)
       : authors = _getAuthors(data),
         mediaType = _getMediaType(data),

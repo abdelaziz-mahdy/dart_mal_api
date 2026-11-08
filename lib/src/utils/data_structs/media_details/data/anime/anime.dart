@@ -2,20 +2,45 @@ import 'package:mal_api_plus/mal_api_plus.dart';
 import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
 import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
+/// An anime entry from MyAnimeList.
 class Anime extends Media {
-  final int? averageEpisodeDuration; // In seconds
+  /// Average length of one episode, in seconds.
+  final int? averageEpisodeDuration;
+
+  /// Day and time of the weekly broadcast in Japan.
   final Broadcast? broadcast;
+
+  /// Format, such as TV, movie or OVA.
   final AnimeMediaType? mediaType;
+
+  /// The signed-in user's list entry for this anime, if any.
   final UserAnimeListStatus? myListStatus;
+
+  /// Total number of episodes, or 0 when unknown.
   final int? numEpisodes;
+
+  /// Age rating.
   final Rating? rating;
+
+  /// Anime that users recommend to fans of this one.
   final List<AnimeRecommendation>? recommendations;
+
+  /// Source material, such as manga or light novel.
   final Source? source;
+
+  /// Season and year the anime started airing.
   final SeasonYear? startSeason;
+
+  /// How many users have the anime in each list status.
   final Statistics? statistics;
+
+  /// Whether the anime has aired, is airing, or has not aired yet.
   final AiringStatus? status;
+
+  /// Studios that produced the anime.
   final List<Studio>? studios;
 
+  /// Creates an anime from already known values.
   Anime(
       {super.alternativeTitles,
       this.averageEpisodeDuration,
@@ -51,6 +76,7 @@ class Anime extends Media {
       super.title,
       super.updatedAt});
 
+  /// Creates an anime from a MyAnimeList API JSON object.
   Anime.fromJsonMap(super.data)
       : averageEpisodeDuration = _getAverageEpisodeDuration(data),
         broadcast = _getBroadcast(data),

@@ -1,3 +1,8 @@
+/// A Dart wrapper for the official MyAnimeList API v2.
+///
+/// Sign in with [Authenticator] to get a [Client], then use the [Client]
+/// methods to search anime and manga, read details and rankings, and edit
+/// the signed-in user's lists.
 library;
 
 export 'src/authenticator.dart';

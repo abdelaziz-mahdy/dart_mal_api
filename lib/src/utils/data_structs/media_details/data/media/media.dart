@@ -2,29 +2,75 @@ import 'package:mal_api_plus/mal_api_plus.dart';
 import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
 import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
+/// Fields shared by [Anime] and [Manga] entries.
+///
+/// Most fields are only set when requested through the `fields` parameter
+/// of the [Client] method that returned the entry, so check for `null`.
 abstract class Media {
+  /// Titles in other languages, plus synonyms.
   final AlternativeTitles? alternativeTitles;
+
+  /// Background information about the entry, as written on MyAnimeList.
   final String? background;
+
+  /// When the entry was added to MyAnimeList.
   final DateTime? createdAt;
+
+  /// When the anime finished airing or the manga finished publishing.
   final DateTime? endDate;
+
+  /// Genres the entry is tagged with.
   final List<Genre>? genres;
+
+  /// MyAnimeList ID of the entry.
   final int? id;
+
+  /// Cover image.
   final Picture? mainPicture;
+
+  /// Mean score given by users, from 0 to 10.
   final double? mean;
+
+  /// How safe the entry is for work.
   final Nsfw? nsfw;
+
+  /// Number of users who added the entry to their favorites.
   final int? numFavorites;
+
+  /// Number of users who have the entry in their list.
   final int? numListUsers;
+
+  /// Number of users who gave the entry a score.
   final int? numScoringUsers;
+
+  /// Additional images of the entry.
   final List<Picture>? pictures;
+
+  /// Popularity rank, where 1 is the entry in the most user lists.
   final int? popularity;
+
+  /// Rank by mean score, where 1 is the highest scored entry.
   final int? rank;
+
+  /// Anime related to this entry, such as sequels and adaptations.
   final List<RelatedAnime>? relatedAnime;
+
+  /// Manga related to this entry, such as the source material.
   final List<RelatedManga>? relatedManga;
+
+  /// When the anime started airing or the manga started publishing.
   final DateTime? startDate;
+
+  /// Plot summary.
   final String? synopsis;
+
+  /// Main title, usually romanized.
   final String? title;
+
+  /// When the entry was last edited on MyAnimeList.
   final DateTime? updatedAt;
 
+  /// Creates an entry from already known values.
   Media({
     this.alternativeTitles,
     this.background,
@@ -49,6 +95,7 @@ abstract class Media {
     this.updatedAt,
   });
 
+  /// Creates an entry from a MyAnimeList API JSON object.
   Media.fromJsonMap(Map<String, dynamic> data)
       : alternativeTitles = _getAlternativeTitles(data),
         background = _getBackground(data),
