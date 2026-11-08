@@ -13,6 +13,8 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    outputs:
+      published: ${{ steps.pubdev.outputs.published }}
     steps:
       - uses: actions/checkout@v4
 
@@ -42,14 +44,35 @@ jobs:
       - run: dart analyze
       - run: dart pub publish --dry-run
 
+      # pub.dev never lets a version be overwritten. If this version is
+      # already there (for example the first release, published by hand),
+      # skip the publish job and still cut the GitHub release.
+      - name: Check whether pub.dev already has this version
+        id: pubdev
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          status=$(curl -s -o /dev/null -w '%{http_code}' \
+            "https://pub.dev/api/packages/mal_api_plus/versions/$version")
+          case "$status" in
+            404) echo "published=false" >> "$GITHUB_OUTPUT" ;;
+            200)
+              echo "::notice::$version is already on pub.dev; skipping publish."
+              echo "published=true" >> "$GITHUB_OUTPUT" ;;
+            *) echo "::error::pub.dev answered HTTP $status for $version."; exit 1 ;;
+          esac
+
   publish:
     needs: validate
+    if: needs.validate.outputs.published == 'false'
     permissions:
       id-token: write # Required for authentication using OIDC
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
 
   release:
-    needs: publish
+    needs: [validate, publish]
+    if: >-
+      always() && needs.validate.result == 'success' &&
+      (needs.publish.result == 'success' || needs.publish.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -65,6 +88,10 @@ jobs:
             on && /^## / { exit }
             on { print }
           ' CHANGELOG.md > notes.md
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "::notice::Release $GITHUB_REF_NAME already exists."
+            exit 0
+          fi
           gh release create "$GITHUB_REF_NAME" \
             --verify-tag \
             --title "mal_api_plus $version" \
