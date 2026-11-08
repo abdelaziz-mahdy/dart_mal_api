@@ -1,7 +1,7 @@
 import 'package:mal_api_plus/mal_api_plus.dart';
 
 class MediaField extends Field {
-  MediaField(String name, [List<Field>? fields]) : super(name, fields);
+  MediaField(super.name, [super.fields]);
 
   MediaField.alternativeTitles([List<AlternativeTitlesField>? fields])
       : super('alternative_titles', fields);

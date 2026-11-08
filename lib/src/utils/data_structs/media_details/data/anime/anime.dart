@@ -2,78 +2,82 @@ import 'package:mal_api_plus/mal_api_plus.dart';
 import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
 import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
+/// An anime entry from MyAnimeList.
 class Anime extends Media {
-  final int? averageEpisodeDuration; // In seconds
+  /// Average length of one episode, in seconds.
+  final int? averageEpisodeDuration;
+
+  /// Day and time of the weekly broadcast in Japan.
   final Broadcast? broadcast;
+
+  /// Format, such as TV, movie or OVA.
   final AnimeMediaType? mediaType;
+
+  /// The signed-in user's list entry for this anime, if any.
   final UserAnimeListStatus? myListStatus;
+
+  /// Total number of episodes, or 0 when unknown.
   final int? numEpisodes;
+
+  /// Age rating.
   final Rating? rating;
+
+  /// Anime that users recommend to fans of this one.
   final List<AnimeRecommendation>? recommendations;
+
+  /// Source material, such as manga or light novel.
   final Source? source;
+
+  /// Season and year the anime started airing.
   final SeasonYear? startSeason;
+
+  /// How many users have the anime in each list status.
   final Statistics? statistics;
+
+  /// Whether the anime has aired, is airing, or has not aired yet.
   final AiringStatus? status;
+
+  /// Studios that produced the anime.
   final List<Studio>? studios;
 
+  /// Creates an anime from already known values.
   Anime(
-      {AlternativeTitles? alternativeTitles,
+      {super.alternativeTitles,
       this.averageEpisodeDuration,
-      String? background,
+      super.background,
       this.broadcast,
-      DateTime? createdAt,
-      DateTime? endDate,
-      List<Genre>? genres,
-      int? id,
-      Picture? mainPicture,
-      double? mean,
+      super.createdAt,
+      super.endDate,
+      super.genres,
+      super.id,
+      super.mainPicture,
+      super.mean,
       this.mediaType,
       this.myListStatus,
-      Nsfw? nsfw,
+      super.nsfw,
       this.numEpisodes,
-      int? numFavorites,
-      int? numListUsers,
-      int? numScoringUsers,
-      List<Picture>? pictures,
-      int? popularity,
+      super.numFavorites,
+      super.numListUsers,
+      super.numScoringUsers,
+      super.pictures,
+      super.popularity,
       this.rating,
-      int? rank,
+      super.rank,
       this.recommendations,
-      List<RelatedAnime>? relatedAnime,
-      List<RelatedManga>? relatedManga,
+      super.relatedAnime,
+      super.relatedManga,
       this.source,
-      DateTime? startDate,
+      super.startDate,
       this.startSeason,
       this.statistics,
       this.status,
       this.studios,
-      String? synopsis,
-      String? title,
-      DateTime? updatedAt})
-      : super(
-            alternativeTitles: alternativeTitles,
-            background: background,
-            createdAt: createdAt,
-            endDate: endDate,
-            genres: genres,
-            id: id,
-            mainPicture: mainPicture,
-            mean: mean,
-            nsfw: nsfw,
-            numFavorites: numFavorites,
-            numListUsers: numListUsers,
-            numScoringUsers: numScoringUsers,
-            pictures: pictures,
-            popularity: popularity,
-            rank: rank,
-            relatedAnime: relatedAnime,
-            relatedManga: relatedManga,
-            startDate: startDate,
-            synopsis: synopsis,
-            title: title,
-            updatedAt: updatedAt);
+      super.synopsis,
+      super.title,
+      super.updatedAt});
 
-  Anime.fromJsonMap(Map<String, dynamic> data)
+  /// Creates an anime from a MyAnimeList API JSON object.
+  Anime.fromJsonMap(super.data)
       : averageEpisodeDuration = _getAverageEpisodeDuration(data),
         broadcast = _getBroadcast(data),
         mediaType = _getMediaType(data),
@@ -86,7 +90,7 @@ class Anime extends Media {
         statistics = _getStatistics(data),
         status = _getStatus(data),
         studios = _getStudios(data),
-        super.fromJsonMap(data);
+        super.fromJsonMap();
 
   static int? _getAverageEpisodeDuration(Map<String, dynamic> data) =>
       data.getAs<int>('average_episode_duration');

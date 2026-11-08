@@ -1,3 +1,10 @@
+## 1.1.1
+
+### Changed
+- Add API documentation for `Anime`, `Manga`, their shared `Media` fields,
+  `User`, user list entries, and `WatchStatus`/`ReadStatus`.
+- Clean up all analyzer hints. No API changes.
+
 ## 1.1.0
 
 First release as `mal_api_plus`, a maintained continuation of

@@ -1,6 +1,26 @@
-enum WatchStatus { completed, dropped, onHold, planToWatch, watching }
+/// Where an anime is in the user's list.
+enum WatchStatus {
+  /// Watched to the end.
+  completed,
 
+  /// Stopped watching.
+  dropped,
+
+  /// Paused, to continue later.
+  onHold,
+
+  /// Not started yet.
+  planToWatch,
+
+  /// Currently watching.
+  watching,
+}
+
+/// Parsing helpers for [WatchStatus].
 class WatchStatusUtils {
+  /// Parses the API value, such as `plan_to_watch`.
+  ///
+  /// Returns `null` for unknown values.
   static WatchStatus? tryParse(String str) {
     switch (str) {
       case 'completed':
@@ -19,7 +39,9 @@ class WatchStatusUtils {
   }
 }
 
+/// Conversions for [WatchStatus].
 extension WatchStatusExts on WatchStatus {
+  /// The value the API uses for this status, such as `plan_to_watch`.
   String toParamStr() {
     switch (this) {
       case WatchStatus.completed:

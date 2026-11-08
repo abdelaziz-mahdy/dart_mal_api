@@ -2,70 +2,66 @@ import 'package:mal_api_plus/mal_api_plus.dart';
 import 'package:mal_api_plus/src/utils/exts/map_exts.dart';
 import 'package:mal_api_plus/src/utils/exts/nullable_exts.dart';
 
+/// A manga entry from MyAnimeList.
 class Manga extends Media {
+  /// Authors and their roles, such as story or art.
   final List<Author>? authors;
+
+  /// Format, such as manga, novel or one-shot.
   final MangaMediaType? mediaType;
+
+  /// The signed-in user's list entry for this manga, if any.
   final UserMangaListStatus? myListStatus;
+
+  /// Total number of chapters, or 0 when unknown.
   final int? numChapters;
+
+  /// Total number of volumes, or 0 when unknown.
   final int? numVolumes;
+
+  /// Manga that users recommend to fans of this one.
   final List<MangaRecommendation>? recommendations;
+
+  /// Magazines the manga was serialized in.
   final List<Serialization>? serialization;
+
+  /// Whether the manga is finished, publishing, or not yet published.
   final PublishingStatus? status;
 
+  /// Creates a manga from already known values.
   Manga(
-      {AlternativeTitles? alternativeTitles,
+      {super.alternativeTitles,
       this.authors,
-      String? background,
-      DateTime? createdAt,
-      DateTime? endDate,
-      List<Genre>? genres,
-      int? id,
-      Picture? mainPicture,
-      double? mean,
+      super.background,
+      super.createdAt,
+      super.endDate,
+      super.genres,
+      super.id,
+      super.mainPicture,
+      super.mean,
       this.mediaType,
       this.myListStatus,
-      Nsfw? nsfw,
+      super.nsfw,
       this.numChapters,
-      int? numFavorites,
-      int? numListUsers,
-      int? numScoringUsers,
+      super.numFavorites,
+      super.numListUsers,
+      super.numScoringUsers,
       this.numVolumes,
-      List<Picture>? pictures,
-      int? popularity,
-      int? rank,
+      super.pictures,
+      super.popularity,
+      super.rank,
       this.recommendations,
-      List<RelatedAnime>? relatedAnime,
-      List<RelatedManga>? relatedManga,
+      super.relatedAnime,
+      super.relatedManga,
       this.serialization,
-      DateTime? startDate,
+      super.startDate,
       this.status,
-      String? synopsis,
-      String? title,
-      DateTime? updatedAt})
-      : super(
-            alternativeTitles: alternativeTitles,
-            background: background,
-            createdAt: createdAt,
-            endDate: endDate,
-            genres: genres,
-            id: id,
-            mainPicture: mainPicture,
-            mean: mean,
-            nsfw: nsfw,
-            numFavorites: numFavorites,
-            numListUsers: numListUsers,
-            numScoringUsers: numScoringUsers,
-            pictures: pictures,
-            popularity: popularity,
-            rank: rank,
-            relatedAnime: relatedAnime,
-            relatedManga: relatedManga,
-            startDate: startDate,
-            synopsis: synopsis,
-            title: title,
-            updatedAt: updatedAt);
+      super.synopsis,
+      super.title,
+      super.updatedAt});
 
-  Manga.fromJsonMap(Map<String, dynamic> data)
+  /// Creates a manga from a MyAnimeList API JSON object.
+  Manga.fromJsonMap(super.data)
       : authors = _getAuthors(data),
         mediaType = _getMediaType(data),
         myListStatus = _getMyListStatus(data),
@@ -74,7 +70,7 @@ class Manga extends Media {
         recommendations = _getRecommendations(data),
         serialization = _getSerialization(data),
         status = _getStatus(data),
-        super.fromJsonMap(data);
+        super.fromJsonMap();
 
   static List<Author>? _getAuthors(Map<String, dynamic> data) => data
       .getAs<List<dynamic>>('authors')

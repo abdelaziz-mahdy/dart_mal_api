@@ -1,6 +1,6 @@
 name: mal_api_plus
 description: A Dart wrapper for the official MyAnimeList API v2, with automatic OAuth2 token refresh. Continuation of the mal_api package.
-version: 1.1.0
+version: 1.1.1
 repository: https://github.com/abdelaziz-mahdy/dart_mal_api
 issue_tracker: https://github.com/abdelaziz-mahdy/dart_mal_api/issues
 topics:
@@ -17,5 +17,5 @@ dependencies:
   oauth2: ^2.0.0
 
 dev_dependencies:
-  lints: ^4.0.0
+  lints: ^6.1.0
   test: ^1.16.0

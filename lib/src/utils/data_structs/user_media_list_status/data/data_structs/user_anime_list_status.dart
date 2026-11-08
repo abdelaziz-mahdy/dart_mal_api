@@ -10,35 +10,28 @@ class UserAnimeListStatus extends UserMediaListStatus {
   final WatchStatus? status;
 
   UserAnimeListStatus({
-    String? comments,
-    DateTime? finishDate,
+    super.comments,
+    super.finishDate,
     this.isRewatching,
     this.numEpisodesWatched,
     this.numTimesRewatched,
-    int? priority,
+    super.priority,
     this.rewatchValue,
-    int? score,
-    DateTime? startDate,
+    super.score,
+    super.startDate,
     this.status,
-    List<String>? tags,
-    DateTime? updatedAt,
-  }) : super(
-            comments: comments,
-            finishDate: finishDate,
-            priority: priority,
-            score: score,
-            startDate: startDate,
-            tags: tags,
-            updatedAt: updatedAt);
+    super.tags,
+    super.updatedAt,
+  });
 
-  UserAnimeListStatus.fromJsonMap(Map<String, dynamic> data)
+  UserAnimeListStatus.fromJsonMap(super.data)
       : isRewatching = data.getAs<bool>('is_rewatching'),
         numEpisodesWatched = data.getAs<int>('num_episodes_watched'),
         numTimesRewatched = data.getAs<int>('num_times_rewatched'),
         rewatchValue = data.getAs<int>('rewatch_value'),
         status =
             data.getAs<String>('status').flatMap(WatchStatusUtils.tryParse),
-        super.fromJsonMap(data);
+        super.fromJsonMap();
 
   @override
   Map<String, String> toStrMap() {
