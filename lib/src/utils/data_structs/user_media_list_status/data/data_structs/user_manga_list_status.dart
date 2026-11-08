@@ -11,36 +11,29 @@ class UserMangaListStatus extends UserMediaListStatus {
   final ReadStatus? status;
 
   UserMangaListStatus({
-    String? comments,
-    DateTime? finishDate,
+    super.comments,
+    super.finishDate,
     this.isRereading,
     this.numChaptersRead,
     this.numTimesReread,
     this.numVolumesRead,
-    int? priority,
+    super.priority,
     this.rereadValue,
-    int? score,
-    DateTime? startDate,
+    super.score,
+    super.startDate,
     this.status,
-    List<String>? tags,
-    DateTime? updatedAt,
-  }) : super(
-            comments: comments,
-            finishDate: finishDate,
-            priority: priority,
-            score: score,
-            startDate: startDate,
-            tags: tags,
-            updatedAt: updatedAt);
+    super.tags,
+    super.updatedAt,
+  });
 
-  UserMangaListStatus.fromJsonMap(Map<String, dynamic> data)
+  UserMangaListStatus.fromJsonMap(super.data)
       : isRereading = data.getAs<bool>('is_rereading'),
         numChaptersRead = data.getAs<int>('num_chapters_read'),
         numTimesReread = data.getAs<int>('num_times_reread'),
         numVolumesRead = data.getAs<int>('num_volumes_read'),
         rereadValue = data.getAs<int>('reread_value'),
         status = data.getAs<String>('status').flatMap(ReadStatusUtils.tryParse),
-        super.fromJsonMap(data);
+        super.fromJsonMap();
 
   @override
   Map<String, String> toStrMap() {

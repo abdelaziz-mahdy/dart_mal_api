@@ -1,18 +1,16 @@
 import 'package:mal_api_plus/mal_api_plus.dart';
 
 class MangaField extends MediaField {
-  MangaField.alternativeTitles([List<AlternativeTitlesField>? fields])
-      : super.alternativeTitles(fields);
+  MangaField.alternativeTitles([super.fields]) : super.alternativeTitles();
   MangaField.authors([List<AuthorField>? fields]) : super('authors', fields);
 
   /// Not supported when the return type is a list of [Manga].
   MangaField.background() : super.background();
   MangaField.createdAt() : super.createdAt();
   MangaField.endDate() : super.endDate();
-  MangaField.genres([List<GenreField>? fields]) : super.genres(fields);
+  MangaField.genres([super.fields]) : super.genres();
   MangaField.id() : super.id();
-  MangaField.mainPicture([List<PictureField>? fields])
-      : super.mainPicture(fields);
+  MangaField.mainPicture([super.fields]) : super.mainPicture();
   MangaField.mean() : super.mean();
   MangaField.mediaType() : super('media_type');
   MangaField.myListStatus([List<UserMangaListStatusField>? fields])
@@ -25,7 +23,7 @@ class MangaField extends MediaField {
   MangaField.numVolumes() : super('num_volumes');
 
   /// Not supported when the return type is a list of [Manga].
-  MangaField.pictures([List<PictureField>? fields]) : super.pictures(fields);
+  MangaField.pictures([super.fields]) : super.pictures();
   MangaField.popularity() : super.popularity();
   MangaField.rank() : super.rank();
 
@@ -34,12 +32,10 @@ class MangaField extends MediaField {
       : super('recommendations', fields);
 
   /// Not supported when the return type is a list of [Manga].
-  MangaField.relatedAnime([List<RelatedAnimeField>? fields])
-      : super.relatedAnime(fields);
+  MangaField.relatedAnime([super.fields]) : super.relatedAnime();
 
   /// Not supported when the return type is a list of [Manga].
-  MangaField.relatedManga([List<RelatedMangaField>? fields])
-      : super.relatedManga(fields);
+  MangaField.relatedManga([super.fields]) : super.relatedManga();
 
   /// Not supported when the return type is a list of [Manga].
   MangaField.serialization([List<SerializationField>? fields])

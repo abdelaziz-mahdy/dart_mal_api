@@ -1,8 +1,7 @@
 import 'package:mal_api_plus/mal_api_plus.dart';
 
 class AnimeField extends MediaField {
-  AnimeField.alternativeTitles([List<AlternativeTitlesField>? fields])
-      : super.alternativeTitles(fields);
+  AnimeField.alternativeTitles([super.fields]) : super.alternativeTitles();
   AnimeField.averageEpisodeDuration() : super('average_episode_duration');
 
   /// Not supported when the return type is a list of [Anime].
@@ -11,10 +10,9 @@ class AnimeField extends MediaField {
       : super('broadcast', fields);
   AnimeField.createdAt() : super.createdAt();
   AnimeField.endDate() : super.endDate();
-  AnimeField.genres([List<GenreField>? fields]) : super.genres(fields);
+  AnimeField.genres([super.fields]) : super.genres();
   AnimeField.id() : super.id();
-  AnimeField.mainPicture([List<PictureField>? fields])
-      : super.mainPicture(fields);
+  AnimeField.mainPicture([super.fields]) : super.mainPicture();
   AnimeField.mean() : super.mean();
   AnimeField.mediaType() : super('media_type');
   AnimeField.myListStatus([List<UserAnimeListStatusField>? fields])
@@ -26,7 +24,7 @@ class AnimeField extends MediaField {
   AnimeField.numScoringUsers() : super.numScoringUsers();
 
   /// Not supported when the return type is a list of [Anime].
-  AnimeField.pictures([List<PictureField>? fields]) : super.pictures(fields);
+  AnimeField.pictures([super.fields]) : super.pictures();
   AnimeField.popularity() : super.popularity();
   AnimeField.rating() : super('rating');
   AnimeField.rank() : super.rank();
@@ -36,12 +34,10 @@ class AnimeField extends MediaField {
       : super('recommendations', fields);
 
   /// Not supported when the return type is a list of [Anime].
-  AnimeField.relatedAnime([List<RelatedAnimeField>? fields])
-      : super.relatedAnime(fields);
+  AnimeField.relatedAnime([super.fields]) : super.relatedAnime();
 
   /// Not supported when the return type is a list of [Anime].
-  AnimeField.relatedManga([List<RelatedMangaField>? fields])
-      : super.relatedManga(fields);
+  AnimeField.relatedManga([super.fields]) : super.relatedManga();
   AnimeField.source() : super('source');
   AnimeField.startDate() : super.startDate();
   AnimeField.startSeason([List<StartSeasonField>? fields])
