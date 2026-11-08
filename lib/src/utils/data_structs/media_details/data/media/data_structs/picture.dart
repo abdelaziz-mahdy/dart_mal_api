@@ -6,6 +6,6 @@ class Picture {
   final Uri? medium;
 
   Picture.fromJsonMap(Map<String, dynamic> data)
-    : large = data.getAs<String>('large').map(Uri.parse),
-    medium = data.getAs<String>('medium').map(Uri.parse);
+      : large = data.getAs<String>('large').map(Uri.parse),
+        medium = data.getAs<String>('medium').map(Uri.parse);
 }

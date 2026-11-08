@@ -5,6 +5,6 @@ class Ranking {
   final int? previousRank;
 
   Ranking.fromJsonMap(Map<String, dynamic> data)
-    : rank = data.getAs<int>('rank'),
-    previousRank = data.getAs<int>('previous_rank');
+      : rank = data.getAs<int>('rank'),
+        previousRank = data.getAs<int>('previous_rank');
 }

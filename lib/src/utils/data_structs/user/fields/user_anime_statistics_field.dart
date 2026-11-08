@@ -14,7 +14,7 @@ class UserAnimeStatisticsField extends Field {
   UserAnimeStatisticsField.numItemsDropped() : super('num_items_dropped');
   UserAnimeStatisticsField.numItemsOnHold() : super('num_items_on_hold');
   UserAnimeStatisticsField.numItemsPlanToWatch()
-    : super('num_items_plan_to_watch');
+      : super('num_items_plan_to_watch');
   UserAnimeStatisticsField.numItemsWatching() : super('num_items_watching');
   UserAnimeStatisticsField.numTimesRewatched() : super('num_times_rewatched');
 }

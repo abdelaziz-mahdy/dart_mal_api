@@ -1,13 +1,8 @@
-enum Season {
-  winter,
-  spring,
-  summer,
-  fall
-}
+enum Season { winter, spring, summer, fall }
 
 class SeasonUtils {
   static Season? tryParse(String str) {
-    switch(str) {
+    switch (str) {
       case 'winter':
         return Season.winter;
       case 'spring':

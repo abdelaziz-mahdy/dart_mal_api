@@ -51,119 +51,78 @@ class Client {
 
   /// Create a [Client] that will be authenticated using [credentialsJson],
   /// [id] and [secret].
-  Client.fromJson({
-    required String credentialsJson, required String id, required String secret
-  }) : _client
-      = oauth2
-        .Client(
-          oauth2.Credentials.fromJson(credentialsJson),
-          identifier: id,
-          secret: secret
-        );
+  Client.fromJson(
+      {required String credentialsJson,
+      required String id,
+      required String secret})
+      : _client = oauth2.Client(oauth2.Credentials.fromJson(credentialsJson),
+            identifier: id, secret: secret);
 
   /// Get a list of [Anime] matching the specified query [q].
-  Future<List<Anime>> getAnimeList(
-    String q, {
-    List<AnimeField>? fields,
-    int limit = 100,
-    bool nsfw = false,
-    int offset = 0
-  }) async => (await _getMediaList(
-    q,
-    '/anime',
-    const AnimeFactory(),
-    fields: fields,
-    limit: limit,
-    nsfw: nsfw,
-    offset: offset
-  )).cast<Anime>();
+  Future<List<Anime>> getAnimeList(String q,
+          {List<AnimeField>? fields,
+          int limit = 100,
+          bool nsfw = false,
+          int offset = 0}) async =>
+      (await _getMediaList(q, '/anime', const AnimeFactory(),
+              fields: fields, limit: limit, nsfw: nsfw, offset: offset))
+          .cast<Anime>();
 
   /// Get a list of [Manga] matching the specified query [q].
-  Future<List<Manga>> getMangaList(
-    String q, {
-    List<MangaField>? fields,
-    int limit = 100,
-    bool nsfw = false,
-    int offset = 0
-  }) async => (await _getMediaList(
-    q,
-    '/manga',
-    const MangaFactory(),
-    fields: fields,
-    limit: limit,
-    nsfw: nsfw,
-    offset: offset
-  )).cast<Manga>();
+  Future<List<Manga>> getMangaList(String q,
+          {List<MangaField>? fields,
+          int limit = 100,
+          bool nsfw = false,
+          int offset = 0}) async =>
+      (await _getMediaList(q, '/manga', const MangaFactory(),
+              fields: fields, limit: limit, nsfw: nsfw, offset: offset))
+          .cast<Manga>();
 
   /// Get the [Anime] associated with [id].
-  Future<Anime> getAnimeDetails(
-    int id, {List<AnimeField>? fields, bool nsfw = false}
-  ) async => await _getMediaDetails(
-      id,
-      '/anime',
-      const AnimeFactory(),
-      fields: fields,
-      nsfw: nsfw
-    ) as Anime;
+  Future<Anime> getAnimeDetails(int id,
+          {List<AnimeField>? fields, bool nsfw = false}) async =>
+      await _getMediaDetails(id, '/anime', const AnimeFactory(),
+          fields: fields, nsfw: nsfw) as Anime;
 
   /// Get the [Manga] associated with [id].
-  Future<Manga> getMangaDetails(
-    int id, {List<MangaField>? fields, bool nsfw = false}
-  ) async => await _getMediaDetails(
-      id,
-      '/manga',
-      const MangaFactory(),
-      fields: fields,
-      nsfw: nsfw
-    ) as Manga;
+  Future<Manga> getMangaDetails(int id,
+          {List<MangaField>? fields, bool nsfw = false}) async =>
+      await _getMediaDetails(id, '/manga', const MangaFactory(),
+          fields: fields, nsfw: nsfw) as Manga;
 
   /// Get a list of the top ranked [Anime]s ranked by [rankingType] along with
   /// their ranking information.
-  Future<List<RankedAnime>> getAnimeRanking(
-    AnimeRankingType rankingType, {
-    List<AnimeRankingField>? fields,
-    int limit = 100,
-    bool nsfw = false,
-    int offset = 0
-  }) async => (await _getMediaRanking(
-    rankingType.toParamStr(),
-    '/anime',
-    const RankedAnimeFactory(),
-    fields: fields,
-    limit: limit,
-    nsfw: nsfw,
-    offset: offset
-  )).cast<RankedAnime>();
+  Future<List<RankedAnime>> getAnimeRanking(AnimeRankingType rankingType,
+          {List<AnimeRankingField>? fields,
+          int limit = 100,
+          bool nsfw = false,
+          int offset = 0}) async =>
+      (await _getMediaRanking(
+              rankingType.toParamStr(), '/anime', const RankedAnimeFactory(),
+              fields: fields, limit: limit, nsfw: nsfw, offset: offset))
+          .cast<RankedAnime>();
 
   /// Get a list of the top ranked [Manga]s ranked by [rankingType] along with
   /// their ranking information.
-  Future<List<RankedManga>> getMangaRanking(
-    MangaRankingType rankingType, {
-    List<MangaRankingField>? fields,
-    int limit = 100,
-    bool nsfw = false,
-    int offset = 0
-  }) async => (await _getMediaRanking(
-    rankingType.toParamStr(),
-    '/manga',
-    const RankedMangaFactory(),
-    fields: fields,
-    limit: limit,
-    nsfw: nsfw,
-    offset: offset
-  )).cast<RankedManga>();
+  Future<List<RankedManga>> getMangaRanking(MangaRankingType rankingType,
+          {List<MangaRankingField>? fields,
+          int limit = 100,
+          bool nsfw = false,
+          int offset = 0}) async =>
+      (await _getMediaRanking(
+              rankingType.toParamStr(), '/manga', const RankedMangaFactory(),
+              fields: fields, limit: limit, nsfw: nsfw, offset: offset))
+          .cast<RankedManga>();
 
   /// Get a list of the [Anime]s belonging to the [season] and [year] sorted by
   /// [sort].
-  Future<List<Anime>> getSeasonalAnime(
-    int year,
-    Season season, {
-    List<AnimeField>? fields,
-    int limit = 100,
-    bool nsfw = false,
-    int offset = 0,
-    SeasonalAnimeSortingMethod sort = SeasonalAnimeSortingMethod.animeScore
-  }) async {
+  Future<List<Anime>> getSeasonalAnime(int year, Season season,
+      {List<AnimeField>? fields,
+      int limit = 100,
+      bool nsfw = false,
+      int offset = 0,
+      SeasonalAnimeSortingMethod sort =
+          SeasonalAnimeSortingMethod.animeScore}) async {
     final params = {
       'fields': (fields ?? []).toParamStr(),
       'limit': limit.toString(),
@@ -173,17 +132,17 @@ class Client {
     };
 
     return (await _getPageable<Map<String, dynamic>>(
-      '/anime/season/$year/${season.toParamStr()}', params
-    )).map((data) => Anime.fromJsonMap(data['node'])).toList();
+            '/anime/season/$year/${season.toParamStr()}', params))
+        .map((data) => Anime.fromJsonMap(data['node']))
+        .toList();
   }
 
   /// Get a list of [Anime]s suggested by MyAnimeList.
-  Future<List<Anime>> getSuggestedAnime({
-    List<AnimeField>? fields,
-    int limit = 100,
-    bool nsfw = false,
-    int offset = 0
-  }) async {
+  Future<List<Anime>> getSuggestedAnime(
+      {List<AnimeField>? fields,
+      int limit = 100,
+      bool nsfw = false,
+      int offset = 0}) async {
     final params = {
       'fields': (fields ?? []).toParamStr(),
       'limit': limit.toString(),
@@ -192,101 +151,96 @@ class Client {
     };
 
     return (await _getPageable<Map<String, dynamic>>(
-      '/anime/suggestions', params
-    )).map((data) => Anime.fromJsonMap(data['node'])).toList();
+            '/anime/suggestions', params))
+        .map((data) => Anime.fromJsonMap(data['node']))
+        .toList();
   }
 
   /// Update the user's [status] regarding the anime associated with [id].
   Future<UserAnimeListStatus> updateMyAnimeListStatus(
-    int id, UserAnimeListStatus status
-  ) async => (await _updateMyMediaListStatus(
-    id, status, '/anime', const UserAnimeListStatusFactory()
-  )) as UserAnimeListStatus;
+          int id, UserAnimeListStatus status) async =>
+      (await _updateMyMediaListStatus(
+              id, status, '/anime', const UserAnimeListStatusFactory()))
+          as UserAnimeListStatus;
 
   /// Update the user's [status] regarding the manga associated with [id].
   Future<UserMangaListStatus> updateMyMangaListStatus(
-    int id, UserMangaListStatus status
-  ) async => (await _updateMyMediaListStatus(
-    id, status, '/manga', const UserMangaListStatusFactory()
-  )) as UserMangaListStatus;
+          int id, UserMangaListStatus status) async =>
+      (await _updateMyMediaListStatus(
+              id, status, '/manga', const UserMangaListStatusFactory()))
+          as UserMangaListStatus;
 
   /// Delete the user's entry for the anime associated with [id].
-  Future<void> deleteMyAnimeListItem(int id) async
-    => _deleteMyMediaListItem(id, '/anime');
+  Future<void> deleteMyAnimeListItem(int id) async =>
+      _deleteMyMediaListItem(id, '/anime');
 
   /// Delete the user's entry for the manga associated with [id].
-  Future<void> deleteMyMangaListItem(int id) async
-    => _deleteMyMediaListItem(id, '/manga');
+  Future<void> deleteMyMangaListItem(int id) async =>
+      _deleteMyMediaListItem(id, '/manga');
 
   /// Get a list of [Anime]s in the list of the user with [username].
   ///
   /// A value of @me for [username] refers to the authenticated user.
   ///
   /// The [Anime]s are sorted by [sort].
-  Future<List<Anime>> getUserAnimeList({
-    List<AnimeField>? fields,
-    int limit = 100,
-    bool nsfw = false,
-    int offset = 0,
-    WatchStatus? status,
-    UserAnimeListSortingMethod? sort,
-    String username = '@me'
-  }) async => (await _getUserMediaList(
-    '/anime',
-    const AnimeFactory(),
-    fields: fields,
-    limit: limit,
-    nsfw: nsfw,
-    offset: offset,
-    status: status?.toParamStr(),
-    sort: sort?.toParamStr(),
-    username: username
-  )).cast<Anime>();
+  Future<List<Anime>> getUserAnimeList(
+          {List<AnimeField>? fields,
+          int limit = 100,
+          bool nsfw = false,
+          int offset = 0,
+          WatchStatus? status,
+          UserAnimeListSortingMethod? sort,
+          String username = '@me'}) async =>
+      (await _getUserMediaList('/anime', const AnimeFactory(),
+              fields: fields,
+              limit: limit,
+              nsfw: nsfw,
+              offset: offset,
+              status: status?.toParamStr(),
+              sort: sort?.toParamStr(),
+              username: username))
+          .cast<Anime>();
 
   /// Get a list of [Manga]s in the list of the user with [username].
   ///
   /// A value of @me for [username] refers to the authenticated user.
   ///
   /// The [Manga]s are sorted by [sort].
-  Future<List<Manga>> getUserMangaList({
-    List<MangaField>? fields,
-    int limit = 100,
-    bool nsfw = false,
-    int offset = 0,
-    ReadStatus? status,
-    UserMangaListSortingMethod? sort,
-    String username = '@me'
-  }) async => (await _getUserMediaList(
-    '/manga',
-    const MangaFactory(),
-    fields: fields,
-    limit: limit,
-    nsfw: nsfw,
-    offset: offset,
-    status: status?.toParamStr(),
-    sort: sort?.toParamStr(),
-    username: username
-  )).cast<Manga>();
+  Future<List<Manga>> getUserMangaList(
+          {List<MangaField>? fields,
+          int limit = 100,
+          bool nsfw = false,
+          int offset = 0,
+          ReadStatus? status,
+          UserMangaListSortingMethod? sort,
+          String username = '@me'}) async =>
+      (await _getUserMediaList('/manga', const MangaFactory(),
+              fields: fields,
+              limit: limit,
+              nsfw: nsfw,
+              offset: offset,
+              status: status?.toParamStr(),
+              sort: sort?.toParamStr(),
+              username: username))
+          .cast<Manga>();
 
   /// Get information about the user.
   Future<User> getUserInformation({List<UserField>? fields}) async {
     final params = {'fields': (fields ?? []).toParamStr()};
-    return User
-      .fromJsonMap(
-        await _getDecoded<Map<String, dynamic>>('/users/@me', params)
-      );
+    return User.fromJsonMap(
+        await _getDecoded<Map<String, dynamic>>('/users/@me', params));
   }
 
   /// Get a list of [ForumBoard]s grouped by their [ForumCategory].
   Future<List<ForumCategory>> getForumBoards() async {
-    Map<String, dynamic> decoded
-      = await _getDecoded<Map<String, dynamic>>('/forum/boards', {});
+    Map<String, dynamic> decoded =
+        await _getDecoded<Map<String, dynamic>>('/forum/boards', {});
     List<dynamic> categories = decoded['categories'];
 
     return categories
-      .cast<Map<String, dynamic>>()
-      .map(ForumCategory.fromJsonMap)
-      .toList();
+        .cast<Map<String, dynamic>>()
+        .map(ForumCategory.fromJsonMap)
+        .toList();
   }
 
   /// Get the [ForumTopic] associated with [topicId].
@@ -294,17 +248,12 @@ class Client {
   /// [limit] and [offset] are use to control the paging of the
   /// [ForumTopic.posts] field. The other fields are unaffected and will remain
   /// the same.
-  Future<ForumTopic> getForumTopicDetail(
-    int topicId, {int limit = 100, int offset = 0}
-  ) async {
+  Future<ForumTopic> getForumTopicDetail(int topicId,
+      {int limit = 100, int offset = 0}) async {
     final params = {'limit': limit.toString(), 'offset': offset.toString()};
 
-    return ForumTopic
-      .fromJsonMap(
-        (await _getDecoded<Map<String, dynamic>>(
-          '/forum/topic/$topicId', params
-        ))['data']
-      );
+    return ForumTopic.fromJsonMap((await _getDecoded<Map<String, dynamic>>(
+        '/forum/topic/$topicId', params))['data']);
   }
 
   /// Get a list of [ForumTopicInfo] that match the provided parameters.
@@ -327,15 +276,14 @@ class Client {
   /// Note that the [ForumPoster.forumAvator] field of
   /// [ForumTopicInfo.createdBy] and [ForumTopicInfo.lastPostCreatedBy] will
   /// both be null.
-  Future<List<ForumTopicInfo>> getForumTopics({
-    int? boardId,
-    int limit = 100,
-    int offset = 0,
-    String? q,
-    int? subboardId,
-    String? topicUserName,
-    String? userName
-  }) async {
+  Future<List<ForumTopicInfo>> getForumTopics(
+      {int? boardId,
+      int limit = 100,
+      int offset = 0,
+      String? q,
+      int? subboardId,
+      String? topicUserName,
+      String? userName}) async {
     final params = {
       'limit': limit.toString(),
       'offset': offset.toString(),
@@ -360,24 +308,20 @@ class Client {
 
     if (params.length == 3) {
       throw ArgumentError(
-        'At least one of the following parameters must be specified: boardId, q, subboardId, topicUserName, userName'
-      );
+          'At least one of the following parameters must be specified: boardId, q, subboardId, topicUserName, userName');
     }
 
     return (await _getPageable<Map<String, dynamic>>('/forum/topics', params))
-      .map(ForumTopicInfo.fromJsonMap)
-      .toList();
+        .map(ForumTopicInfo.fromJsonMap)
+        .toList();
   }
 
   Future<List<Media>> _getMediaList(
-    String q,
-    String path,
-    MediaFactory mediaFactory, {
-    List<MediaField>? fields,
-    required int limit,
-    required bool nsfw,
-    required int offset
-  }) async {
+      String q, String path, MediaFactory mediaFactory,
+      {List<MediaField>? fields,
+      required int limit,
+      required bool nsfw,
+      required int offset}) async {
     final params = {
       'q': q,
       'fields': (fields ?? []).toParamStr(),
@@ -387,36 +331,27 @@ class Client {
     };
 
     return (await _getPageable<Map<String, dynamic>>(path, params))
-      .map((data) => mediaFactory.fromJsonMap(data['node']))
-      .toList();
+        .map((data) => mediaFactory.fromJsonMap(data['node']))
+        .toList();
   }
 
-  Future<Media> _getMediaDetails(
-    int id,
-    String path,
-    MediaFactory mediaFactory, {
-    List<MediaField>? fields,
-    required bool nsfw
-  }) async {
+  Future<Media> _getMediaDetails(int id, String path, MediaFactory mediaFactory,
+      {List<MediaField>? fields, required bool nsfw}) async {
     final params = {
-      'fields': (fields ?? []).toParamStr(), 'nsfw': nsfw.toString()
+      'fields': (fields ?? []).toParamStr(),
+      'nsfw': nsfw.toString()
     };
 
-    return mediaFactory
-      .fromJsonMap(
-        await _getDecoded<Map<String, dynamic>>('$path/$id', params)
-      );
+    return mediaFactory.fromJsonMap(
+        await _getDecoded<Map<String, dynamic>>('$path/$id', params));
   }
 
   Future<List<RankedMedia>> _getMediaRanking(
-    String rankingType,
-    String path,
-    RankedMediaFactory rankedMediaFactory, {
-    List<MediaRankingField>? fields,
-    required int limit,
-    required bool nsfw,
-    required int offset
-  }) async {
+      String rankingType, String path, RankedMediaFactory rankedMediaFactory,
+      {List<MediaRankingField>? fields,
+      required int limit,
+      required bool nsfw,
+      required int offset}) async {
     final params = {
       'ranking_type': rankingType,
       'fields': (fields ?? []).toParamStr(),
@@ -426,36 +361,31 @@ class Client {
     };
 
     return (await _getPageable<Map<String, dynamic>>('$path/ranking', params))
-      .map(rankedMediaFactory.fromJsonMap)
-      .toList();
+        .map(rankedMediaFactory.fromJsonMap)
+        .toList();
   }
 
   Future<UserMediaListStatus> _updateMyMediaListStatus(
-    int id,
-    UserMediaListStatus status,
-    String path,
-    UserMediaListStatusFactory userMediaListStatusFactory
-  ) async => userMediaListStatusFactory.fromJsonMap(
-    await _patchDecoded<Map<String, dynamic>>(
-      '$path/$id/my_list_status', status.toStrMap()
-    )
-  );
+          int id,
+          UserMediaListStatus status,
+          String path,
+          UserMediaListStatusFactory userMediaListStatusFactory) async =>
+      userMediaListStatusFactory.fromJsonMap(
+          await _patchDecoded<Map<String, dynamic>>(
+              '$path/$id/my_list_status', status.toStrMap()));
 
   Future<void> _deleteMyMediaListItem(int id, String path) async {
     await _req('$path/$id/my_list_status', {}, _client.delete);
   }
 
-  Future<List<Media>> _getUserMediaList(
-    String path,
-    MediaFactory mediaFactory, {
-    List<MediaField>? fields,
-    required int limit,
-    required bool nsfw,
-    required int offset,
-    String? status,
-    String? sort,
-    required String username
-  }) async {
+  Future<List<Media>> _getUserMediaList(String path, MediaFactory mediaFactory,
+      {List<MediaField>? fields,
+      required int limit,
+      required bool nsfw,
+      required int offset,
+      String? status,
+      String? sort,
+      required String username}) async {
     final params = {
       'fields': (fields ?? []).toParamStr(),
       'limit': limit.toString(),
@@ -470,30 +400,27 @@ class Client {
     }
 
     return (await _getPageable<Map<String, dynamic>>(
-      '/users/$username${path}list', params
-    )).map((data) => mediaFactory.fromJsonMap(data['node'])).toList();
+            '/users/$username${path}list', params))
+        .map((data) => mediaFactory.fromJsonMap(data['node']))
+        .toList();
   }
 
   Future<Iterable<T>> _getPageable<T>(
-    String path, Map<String, String> params
-  ) async {
+      String path, Map<String, String> params) async {
     final decoded = await _getDecoded<Map<String, dynamic>>(path, params);
     final Iterable<dynamic> datas = decoded['data'];
 
     return datas.cast<T>();
   }
 
-  Future<T> _getDecoded<T>(String path, Map<String, String> params) async
-    => jsonDecode(await _get(path, params));
+  Future<T> _getDecoded<T>(String path, Map<String, String> params) async =>
+      jsonDecode(await _get(path, params));
 
-  Future<String> _get(String path, Map<String, String> params) async
-    => _req(path, params, (url) => _client.get(url));
+  Future<String> _get(String path, Map<String, String> params) async =>
+      _req(path, params, (url) => _client.get(url));
 
-  Future<String> _req(
-    String path,
-    Map<String, String> params,
-    Future<http.Response> Function(Uri) req
-  ) async {
+  Future<String> _req(String path, Map<String, String> params,
+      Future<http.Response> Function(Uri) req) async {
     final url = Uri.https(_authority, '/$_version$path', params);
     final res = await req(url);
     if (res.statusCode != 200) {
@@ -502,9 +429,9 @@ class Client {
     return res.body;
   }
 
-  Future<T> _patchDecoded<T>(String path, Map<String, String> body) async
-    => jsonDecode(await _patch(path, body));
+  Future<T> _patchDecoded<T>(String path, Map<String, String> body) async =>
+      jsonDecode(await _patch(path, body));
 
-  Future<String> _patch(String path, Map<String, String> body) async
-    => _req(path, {}, (url) => _client.patch(url, body: body));
+  Future<String> _patch(String path, Map<String, String> body) async =>
+      _req(path, {}, (url) => _client.patch(url, body: body));
 }

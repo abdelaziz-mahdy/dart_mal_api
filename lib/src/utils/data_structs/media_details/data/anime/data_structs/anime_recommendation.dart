@@ -5,5 +5,5 @@ class AnimeRecommendation extends MediaRecommendation {
   Anime? get node => mediaNode as Anime;
 
   AnimeRecommendation.fromJsonMap(Map<String, dynamic> data)
-    : super.fromJsonMap(data, const AnimeFactory());
+      : super.fromJsonMap(data, const AnimeFactory());
 }

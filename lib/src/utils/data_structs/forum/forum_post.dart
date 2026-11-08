@@ -11,13 +11,12 @@ class ForumPost {
   final String? signature;
 
   ForumPost.fromJsonMap(Map<String, dynamic> data)
-    : body = data.getAs<String>('body'),
-      createdAt = data.getAs<String>('created_at').map(DateTime.parse),
-      createdBy
-        = data
-          .getAs<Map<String, dynamic>>('created_by')
-          .map(ForumPoster.fromJsonMap),
-      id = data.getAs<int>('id'),
-      number = data.getAs<int>('number'),
-      signature = data.getAs<String>('signature');
+      : body = data.getAs<String>('body'),
+        createdAt = data.getAs<String>('created_at').map(DateTime.parse),
+        createdBy = data
+            .getAs<Map<String, dynamic>>('created_by')
+            .map(ForumPoster.fromJsonMap),
+        id = data.getAs<int>('id'),
+        number = data.getAs<int>('number'),
+        signature = data.getAs<String>('signature');
 }

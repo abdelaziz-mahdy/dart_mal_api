@@ -6,11 +6,10 @@ class ForumCategory {
   final String? title;
 
   ForumCategory.fromJsonMap(Map<String, dynamic> data)
-    : boards
-        = data
-          .getAs<List<dynamic>>('boards')
-          ?.cast<Map<String, dynamic>>()
-          .map(ForumBoard.fromJsonMap)
-          .toList(),
-      title = data.getAs<String>('title');
+      : boards = data
+            .getAs<List<dynamic>>('boards')
+            ?.cast<Map<String, dynamic>>()
+            .map(ForumBoard.fromJsonMap)
+            .toList(),
+        title = data.getAs<String>('title');
 }

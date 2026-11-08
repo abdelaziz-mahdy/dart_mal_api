@@ -6,7 +6,7 @@ class ForumPollOption {
   final int? votes;
 
   ForumPollOption.fromJsonMap(Map<String, dynamic> data)
-    : id = data.getAs<int>('id'),
-      text = data.getAs<String>('text'),
-      votes = data.getAs<int>('votes');
+      : id = data.getAs<int>('id'),
+        text = data.getAs<String>('text'),
+        votes = data.getAs<int>('votes');
 }

@@ -6,7 +6,7 @@ class AuthorNode {
   final String? lastName;
 
   AuthorNode.fromJsonMap(Map<String, dynamic> data)
-    : id = data.getAs<int>('id'),
-    firstName = data.getAs<String>('first_name'),
-    lastName = data.getAs<String>('last_name');
+      : id = data.getAs<int>('id'),
+        firstName = data.getAs<String>('first_name'),
+        lastName = data.getAs<String>('last_name');
 }

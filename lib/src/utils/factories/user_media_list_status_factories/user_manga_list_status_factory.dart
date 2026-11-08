@@ -5,6 +5,6 @@ class UserMangaListStatusFactory extends UserMediaListStatusFactory {
   const UserMangaListStatusFactory();
 
   @override
-  UserMangaListStatus fromJsonMap(Map<String, dynamic> data)
-    => UserMangaListStatus.fromJsonMap(data);
+  UserMangaListStatus fromJsonMap(Map<String, dynamic> data) =>
+      UserMangaListStatus.fromJsonMap(data);
 }

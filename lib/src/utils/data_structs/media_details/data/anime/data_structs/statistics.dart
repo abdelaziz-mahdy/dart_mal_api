@@ -7,9 +7,8 @@ class Statistics {
   final StatisticsStatus? status;
 
   Statistics.fromJsonMap(Map<String, dynamic> data)
-    : numListUsers = data.getAs<int>('num_list_users'),
-    status
-      = data
-        .getAs<Map<String, dynamic>>('status')
-        .map(StatisticsStatus.fromJsonMap);
+      : numListUsers = data.getAs<int>('num_list_users'),
+        status = data
+            .getAs<Map<String, dynamic>>('status')
+            .map(StatisticsStatus.fromJsonMap);
 }

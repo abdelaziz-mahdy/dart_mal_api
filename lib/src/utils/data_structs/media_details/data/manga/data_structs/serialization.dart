@@ -7,9 +7,8 @@ class Serialization {
   final String? role;
 
   Serialization.fromJsonMap(Map<String, dynamic> data)
-    : node
-      = data
-        .getAs<Map<String, dynamic>>('node')
-        .map(SerializationNode.fromJsonMap),
-    role = data.getAs<String>('role');
+      : node = data
+            .getAs<Map<String, dynamic>>('node')
+            .map(SerializationNode.fromJsonMap),
+        role = data.getAs<String>('role');
 }

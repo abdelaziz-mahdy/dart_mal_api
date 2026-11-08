@@ -8,11 +8,12 @@ abstract class RelatedMedia {
   final RelationType? relationType;
   final String? relationTypeFormatted;
 
-  RelatedMedia.fromJsonMap(
-    Map<String, dynamic> data, MediaFactory mediaFactory
-  ) : mediaNode
-      = data.getAs<Map<String, dynamic>>('node').map(mediaFactory.fromJsonMap),
-    relationType
-      = data.getAs<String>('relation_type').flatMap(RelationTypeUtils.tryParse),
-    relationTypeFormatted = data.getAs<String>('relation_type_formatted');
+  RelatedMedia.fromJsonMap(Map<String, dynamic> data, MediaFactory mediaFactory)
+      : mediaNode = data
+            .getAs<Map<String, dynamic>>('node')
+            .map(mediaFactory.fromJsonMap),
+        relationType = data
+            .getAs<String>('relation_type')
+            .flatMap(RelationTypeUtils.tryParse),
+        relationTypeFormatted = data.getAs<String>('relation_type_formatted');
 }

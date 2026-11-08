@@ -5,6 +5,6 @@ class RankedMangaFactory extends RankedMediaFactory {
   const RankedMangaFactory();
 
   @override
-  RankedManga fromJsonMap(Map<String, dynamic> data)
-    => RankedManga.fromJsonMap(data);
+  RankedManga fromJsonMap(Map<String, dynamic> data) =>
+      RankedManga.fromJsonMap(data);
 }

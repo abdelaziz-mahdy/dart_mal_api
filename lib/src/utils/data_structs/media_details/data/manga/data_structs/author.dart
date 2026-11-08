@@ -7,7 +7,8 @@ class Author {
   final String? role;
 
   Author.fromJsonMap(Map<String, dynamic> data)
-    : node
-      = data.getAs<Map<String, dynamic>>('node').map(AuthorNode.fromJsonMap),
-    role = data.getAs<String>('role');
+      : node = data
+            .getAs<Map<String, dynamic>>('node')
+            .map(AuthorNode.fromJsonMap),
+        role = data.getAs<String>('role');
 }

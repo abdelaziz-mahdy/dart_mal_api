@@ -8,8 +8,9 @@ abstract class MediaRecommendation {
   final int? numRecommendations;
 
   MediaRecommendation.fromJsonMap(
-    Map<String, dynamic> data, MediaFactory mediaFactory
-  ) : mediaNode
-      = data.getAs<Map<String, dynamic>>('node').map(mediaFactory.fromJsonMap),
-    numRecommendations = data.getAs<int>('num_recommendations');
+      Map<String, dynamic> data, MediaFactory mediaFactory)
+      : mediaNode = data
+            .getAs<Map<String, dynamic>>('node')
+            .map(mediaFactory.fromJsonMap),
+        numRecommendations = data.getAs<int>('num_recommendations');
 }

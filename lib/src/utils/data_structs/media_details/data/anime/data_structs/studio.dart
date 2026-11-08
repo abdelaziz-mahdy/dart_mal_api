@@ -5,5 +5,6 @@ class Studio {
   final String? name;
 
   Studio.fromJsonMap(Map<String, dynamic> data)
-    : id = data.getAs<int>('id'), name = data.getAs<String>('name');
+      : id = data.getAs<int>('id'),
+        name = data.getAs<String>('name');
 }

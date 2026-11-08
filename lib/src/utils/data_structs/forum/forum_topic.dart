@@ -8,15 +8,12 @@ class ForumTopic {
   final String? title;
 
   ForumTopic.fromJsonMap(Map<String, dynamic> data)
-    : poll
-        = data
-          .getAs<Map<String, dynamic>>('poll')
-          .map(ForumPoll.fromJsonMap),
-      posts
-        = data
-          .getAs<List<dynamic>>('posts')
-          ?.cast<Map<String, dynamic>>()
-          .map(ForumPost.fromJsonMap)
-          .toList(),
+      : poll =
+            data.getAs<Map<String, dynamic>>('poll').map(ForumPoll.fromJsonMap),
+        posts = data
+            .getAs<List<dynamic>>('posts')
+            ?.cast<Map<String, dynamic>>()
+            .map(ForumPost.fromJsonMap)
+            .toList(),
         title = data.getAs<String>('title');
 }

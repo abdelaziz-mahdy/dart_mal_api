@@ -5,6 +5,6 @@ class ForumSubboard {
   final String? title;
 
   ForumSubboard.fromJsonMap(Map<String, dynamic> map)
-    : id = map.getAs<int>('id'),
-      title = map.getAs<String>('title');
+      : id = map.getAs<int>('id'),
+        title = map.getAs<String>('title');
 }

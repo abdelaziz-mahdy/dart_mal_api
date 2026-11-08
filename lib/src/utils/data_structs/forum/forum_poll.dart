@@ -8,13 +8,12 @@ class ForumPoll {
   final String? question;
 
   ForumPoll.fromJsonMap(Map<String, dynamic> data)
-    : closed = data.getAs<bool>('closed'),
-      id = data.getAs<int>('id'),
-      options
-        = data
-          .getAs<List<dynamic>>('options')
-          ?.cast<Map<String, dynamic>>()
-          .map(ForumPollOption.fromJsonMap)
-          .toList(),
-      question = data.getAs<String>('question');
+      : closed = data.getAs<bool>('closed'),
+        id = data.getAs<int>('id'),
+        options = data
+            .getAs<List<dynamic>>('options')
+            ?.cast<Map<String, dynamic>>()
+            .map(ForumPollOption.fromJsonMap)
+            .toList(),
+        question = data.getAs<String>('question');
 }

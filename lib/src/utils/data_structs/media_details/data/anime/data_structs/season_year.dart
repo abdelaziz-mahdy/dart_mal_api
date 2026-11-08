@@ -7,6 +7,6 @@ class SeasonYear {
   final Season? season;
 
   SeasonYear.fromJsonMap(Map<String, dynamic> data)
-    : year = data.getAs<int>('year'),
-    season = data.getAs<String>('season').flatMap(SeasonUtils.tryParse);
+      : year = data.getAs<int>('year'),
+        season = data.getAs<String>('season').flatMap(SeasonUtils.tryParse);
 }

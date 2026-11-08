@@ -1,10 +1,4 @@
-enum ReadStatus {
-  completed,
-  dropped,
-  onHold,
-  planToRead,
-  reading
-}
+enum ReadStatus { completed, dropped, onHold, planToRead, reading }
 
 class ReadStatusUtils {
   static ReadStatus? tryParse(String str) {
