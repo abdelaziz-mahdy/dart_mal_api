@@ -1,0 +1,71 @@
+name: Publish to pub.dev
+
+# Pushing a tag v<version> publishes that version. pub.dev must have
+# "Enable publishing from GitHub Actions" turned on for this repository with
+# the tag pattern v{{version}} (package Admin page), or the OIDC exchange in
+# the publish job is refused.
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the tag matches the pubspec version
+        run: |
+          pubspec=$(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')
+          tag="${GITHUB_REF_NAME#v}"
+          if [[ "$pubspec" != "$tag" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME says $tag, pubspec.yaml says $pubspec."
+            exit 1
+          fi
+
+      - name: Check CHANGELOG.md has an entry for this version
+        run: |
+          version=$(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')
+          escaped="${version//./\\.}"
+          if ! grep -qE "^## +\[?${escaped}\]?( |$)" CHANGELOG.md; then
+            echo "::error::CHANGELOG.md has no '## $version' heading."
+            exit 1
+          fi
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - run: dart pub get
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze
+      - run: dart pub publish --dry-run
+
+  publish:
+    needs: validate
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+
+  release:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create the GitHub release from the CHANGELOG entry
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v v="$version" '
+            $0 ~ "^## +\\[?" v "\\]?( |$)" { on = 1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          gh release create "$GITHUB_REF_NAME" \
+            --verify-tag \
+            --title "mal_api_plus $version" \
+            --notes-file notes.md

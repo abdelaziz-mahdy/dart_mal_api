@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - run: dart pub get
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze
+      # The test suite calls the live MyAnimeList API and edits the account's
+      # lists, so it needs real credentials and is not run here. The dry run
+      # still catches pubspec, layout and archive problems before a tag.
+      - run: dart pub publish --dry-run
